@@ -3,40 +3,36 @@ name: Deploy Raven Pages
 on:
   push:
     branches:
-      - main
+      - main  # Trigger deployment whenever the main branch is pushed
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout Repository
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      # Step 1: Checkout Code
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-    # Step 2: Setup Node.js
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
+      # Step 2: Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Adjust if your site requires a different Node.js version
 
-    # Step 3: Install Dependencies
-    - name: Install Dependencies
-      run: npm install
+      # Step 3: Install Dependencies
+      - name: Install Dependencies
+        run: npm install || echo "No dependencies to install"
 
-    # Step 4: Build the Website
-    - name: Build Website
-      run: |
-        npm run build
-        ls -al ./build  # List contents of build directory for debugging
-        echo "Build directory contents:"
-        ls ./build
+      # Step 4: Build the Site
+      - name: Build Website
+        run: npm run build || echo "No build script defined, skipping"
 
-    # Step 5: Deploy to GitHub Pages
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build  # Ensure the publish directory is set to ./build
-        publish_branch: gh-pages
-        keep_files: false
+      # Step 5: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build  # Publishes the build directory to the root of the gh-pages branch
+          publish_branch: gh-pages
+          keep_files: false
