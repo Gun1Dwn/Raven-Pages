@@ -8,6 +8,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Added to ensure the workflow can write to the repository
 
     steps:
       # Step 1: Checkout Code
@@ -20,21 +22,25 @@ jobs:
         with:
           node-version: '16'  # Adjust if your site requires a different Node.js version
 
-      # Step 3: Install Dependencies
+      # Step 3: Clear npm cache - to ensure we're using the latest dependencies
+      - name: Clear npm cache
+        run: npm cache clean --force
+
+      # Step 4: Install Dependencies
       - name: Install Dependencies
-        run: npm install || echo "No dependencies to install"
+        run: npm install
 
-      # Step 4: Build the Site
+      # Step 5: Build the Site
       - name: Build Website
-        run: npm run build || echo "No build script defined, skipping"
+        run: npm run build
 
-      # Check contents of the build folder
+      # Step 6: Check contents of the build folder
       - name: List files in build folder
         run: |
           echo "Listing build directory:"
           ls -la ./build
 
-      # Step 5: Deploy to GitHub Pages
+      # Step 7: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
