@@ -3,11 +3,13 @@ name: Deploy Raven Pages
 on:
   push:
     branches:
-      - main # Change to the branch you’re actively pushing to
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Ensures the bot has write access
 
     steps:
     # Step 1: Checkout Code
@@ -18,7 +20,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16' # Can be adjusted based on site requirements
+        node-version: '16' # Adjust based on site requirements
 
     # Step 3: Install Dependencies
     - name: Install Dependencies
