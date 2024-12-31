@@ -28,11 +28,17 @@ jobs:
       - name: Build Website
         run: npm run build || echo "No build script defined, skipping"
 
+      # Check contents of the build folder
+      - name: List files in build folder
+        run: |
+          echo "Listing build directory:"
+          ls -la ./build
+
       # Step 5: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build  # Publishes the build directory to the root of the gh-pages branch
+          publish_dir: ./build  # Publishes the build directory to the root of the gh-pages branch
           publish_branch: gh-pages
           keep_files: false
