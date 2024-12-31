@@ -34,10 +34,10 @@ jobs:
       - name: Build Website
         run: npm run build
 
-      # Step 6: Check contents of the build folder
-      - name: List files in build folder
+      # Step 6: Check contents of the build folder before deployment
+      - name: List files in build folder before deploy
         run: |
-          echo "Listing build directory:"
+          echo "Contents of build directory before deployment:"
           ls -la ./build
 
       # Step 7: Deploy to GitHub Pages
@@ -48,3 +48,10 @@ jobs:
           publish_dir: ./build  # Publishes the build directory to the root of the gh-pages branch
           publish_branch: gh-pages
           keep_files: false
+
+      # Step 8: Check contents of the build folder after deployment attempt
+      - name: List files in build folder after deploy
+        if: always()  # This step will run regardless of previous steps' success/failure
+        run: |
+          echo "Contents of build directory after deployment attempt:"
+          ls -la ./build
