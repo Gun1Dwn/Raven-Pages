@@ -3,7 +3,7 @@ name: Deploy Raven Pages
 on:
   push:
     branches:
-      - gh-pages
+      - main # Change to the branch you’re actively pushing to
 
 jobs:
   build-and-deploy:
