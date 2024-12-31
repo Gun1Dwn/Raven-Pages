@@ -39,8 +39,16 @@ jobs:
         run: |
           echo "Contents of build directory before deployment:"
           ls -la ./build
+          tree ./build  # This command will show the tree structure of the build directory
 
-      # Step 7: Deploy to GitHub Pages
+      # Step 7: Debug Build Directory
+      - name: Debug Build Directory
+        run: |
+          echo "Debugging build directory:"
+          ls -la ./build
+          tree ./build
+
+      # Step 8: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -49,9 +57,10 @@ jobs:
           publish_branch: gh-pages
           keep_files: false
 
-      # Step 8: Check contents of the build folder after deployment attempt
+      # Step 9: Check contents of the build folder after deployment attempt
       - name: List files in build folder after deploy
         if: always()  # This step will run regardless of previous steps' success/failure
         run: |
           echo "Contents of build directory after deployment attempt:"
           ls -la ./build
+          tree ./build
