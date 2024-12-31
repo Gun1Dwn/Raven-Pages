@@ -33,6 +33,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build  # Publishes the build directory to the root of the gh-pages branch
+          publish_dir: /build  # Publishes the build directory to the root of the gh-pages branch
           publish_branch: gh-pages
           keep_files: false
