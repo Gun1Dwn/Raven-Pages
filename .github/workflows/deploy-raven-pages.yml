@@ -48,7 +48,16 @@ jobs:
           ls -la ./build
           tree ./build
 
-      # Step 8: Deploy to GitHub Pages
+      # Step 8: Debug file copy
+      - name: Debug file copy
+        run: |
+          echo "Files in build directory before copy:"
+          ls -la ./build
+          echo "Attempting to copy files:"
+          mkdir -p /tmp/debug-copy
+          cp -v ./build/* /tmp/debug-copy/
+
+      # Step 9: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -56,8 +65,9 @@ jobs:
           publish_dir: ./build  # Publishes the build directory to the root of the gh-pages branch
           publish_branch: gh-pages
           keep_files: false
+          force_orphan: true  # Forces a new commit, potentially useful if previous deployments didn't update
 
-      # Step 9: Check contents of the build folder after deployment attempt
+      # Step 10: Check contents of the build folder after deployment attempt
       - name: List files in build folder after deploy
         if: always()  # This step will run regardless of previous steps' success/failure
         run: |
