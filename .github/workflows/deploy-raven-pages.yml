@@ -55,7 +55,7 @@ jobs:
           ls -la ./build
           echo "Attempting to copy files:"
           mkdir -p /tmp/debug-copy
-          cp -v ./build/* /tmp/debug-copy/
+          cp -rv ./build/* /tmp/debug-copy/
 
       # Step 9: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
