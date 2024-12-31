@@ -3,7 +3,7 @@ name: Deploy Raven Pages
 on:
   push:
     branches:
-      - main # Trigger deployment whenever the main branch is pushed
+      - main  # Trigger deployment whenever the main branch is pushed
 
 jobs:
   build-and-deploy:
@@ -18,7 +18,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16' # Adjust if your site requires a different Node.js version
+        node-version: '16'
 
     # Step 3: Install Dependencies
     - name: Install Dependencies
@@ -33,6 +33,6 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build # Publishes the build directory to the root of the gh-pages branch
+        publish_dir: ./build  # Publish the build directory to the root of the gh-pages branch
         publish_branch: gh-pages
         keep_files: false
